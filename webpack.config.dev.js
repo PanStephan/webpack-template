@@ -1,8 +1,6 @@
 const merge = require('webpack-merge')
 
-const path = require('path')
-
-const baseWebpackConfig = require('./webpack.base.config')
+const baseWebpackConfig = require('./webpack.config.base')
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   mode: 'development',
@@ -16,7 +14,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   plugins: []
 })
 
-// export webpackConfig
 module.exports = new Promise((resolve, reject) => {
  resolve(devWebpackConfig)
 })

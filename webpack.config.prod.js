@@ -1,12 +1,11 @@
 const merge = require('webpack-merge')
 const OptimizeCssAssetWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 
-const path = require('path')
+const baseWebpackConfig = require('./webpack.config.base')
 
-const baseWebpackConfig = require('./webpack.base.config')
-
-const prodWebpackConfig = merge(baseWebpackConfig, {
+const prodWebpackConfig = merge.smart(baseWebpackConfig, {
   mode: 'production',
   optimization: {
     splitChunks: {
@@ -18,12 +17,13 @@ const prodWebpackConfig = merge(baseWebpackConfig, {
     ]
   },
   module: {
-    rules: [
-    ]
+    rules: []
   },
+  plugins: [
+    new CleanWebpackPlugin(),
+  ]
 })
 
-// export prodWebpackConfig
 module.exports = new Promise((resolve, reject) => {
  resolve(prodWebpackConfig)
 })

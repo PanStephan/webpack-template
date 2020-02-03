@@ -1,18 +1,17 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const path = require('path')
 
 const isDev = process.env.NODE_ENV === 'development'
-const filename = () => isDev ?  `[name]` : `[name].[hash]`
+const hashed = isDev ?  `` : `.[hash]`
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: './main.js',
   output: {
-    filename: `${filename()}.js`, 
+    filename: `main${hashed}.js`, 
     path: path.resolve(__dirname, './dist'),
   },
   resolve: {
@@ -26,7 +25,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: `fonts/${filename()}.[ext]`
+              name: `fonts/[name].[ext]`
             }
           }
         ]
@@ -40,27 +39,34 @@ module.exports = {
         ],
       },
       {
-        test: /\.(sa|sc|c)ss$/, 
+        test: /\.css$/, 
         use: [
-          MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'
+          MiniCssExtractPlugin.loader, 'css-loader'
         ]
       },
+      {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+        } 
+      }
     ]
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `${filename()}.css`,
+      filename: `styles${hashed}.css`,
     }),
     new HtmlWebpackPlugin({
-      filename: `${filename()}.html`,
+      filename: `index${hashed}.html`,
       template: 'views/index.html',
       minify: {
-        collapseWhitespace: isDev
+        collapseWhitespace: !isDev,
+        removeComments: !isDev,
       }
     }),
-    new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
-      {from:'./assets/images', to:`images/${filename()}.[ext]`} 
+      {from:'./assets/images', to:`images/[name].[ext]`} 
     ]),
   ]
 }
