@@ -66,7 +66,7 @@ module.exports = {
       }
     }),
     new CopyWebpackPlugin([
-      {from:'./assets/images', to:`images/[name].[ext]`} 
+      {from:'./assets/images', to:`images/[name].[ext]`, ignore: ['.DS_Store']}
     ]),
   ]
 }
