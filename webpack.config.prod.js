@@ -24,6 +24,4 @@ const prodWebpackConfig = merge.smart(baseWebpackConfig, {
   ]
 })
 
-module.exports = new Promise((resolve, reject) => {
- resolve(prodWebpackConfig)
-})
+module.exports = prodWebpackConfig

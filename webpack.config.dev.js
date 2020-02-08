@@ -5,7 +5,7 @@ const baseWebpackConfig = require('./webpack.config.base')
 const devWebpackConfig = merge(baseWebpackConfig, {
   mode: 'development',
   devServer: {
-    port: 8080,
+    port: 3000,
     hot: true
   },
   module: {
@@ -14,6 +14,4 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   plugins: []
 })
 
-module.exports = new Promise((resolve, reject) => {
- resolve(devWebpackConfig)
-})
+module.exports = devWebpackConfig
