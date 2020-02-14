@@ -49,7 +49,7 @@ module.exports = {
         exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
-        } 
+        }
       }
     ]
   },
@@ -58,12 +58,8 @@ module.exports = {
       filename: `styles${hashed}.css`,
     }),
     new HtmlWebpackPlugin({
-      filename: `index${hashed}.html`,
       template: 'views/index.html',
-      minify: {
-        collapseWhitespace: !isDev,
-        removeComments: !isDev,
-      }
+      filename: 'index.html',
     }),
     new CopyWebpackPlugin([
       {from:'./assets/images', to:`images/[name].[ext]`, ignore: ['.DS_Store']}
