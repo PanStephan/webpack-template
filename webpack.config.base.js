@@ -4,14 +4,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const path = require('path')
 
-const isDev = process.env.NODE_ENV === 'development'
-const hashed = isDev ?  `` : `.[hash]`
-
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: './main.js',
   output: {
-    filename: `main${hashed}.js`, 
+    filename: `main.[hash].js`, 
     path: path.resolve(__dirname, './dist'),
   },
   resolve: {
@@ -55,7 +52,7 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `styles${hashed}.css`,
+      filename: `styles.css`,
     }),
     new HtmlWebpackPlugin({
       template: 'views/index.html',
